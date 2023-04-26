@@ -1,0 +1,5 @@
+id,name,age,email,teach_courses
+5,hatem,23,h@gmail.com ,[1,2]
+6,ibrahim,23,i@gmail.com,[1]
+7,ruba,23,r@gmail.com,[2]
+8,abeer,23,a@gmail.com ,[1,2]

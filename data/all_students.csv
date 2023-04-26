@@ -1,0 +1,5 @@
+id,name,age,email,gpa,level,enrolled_courses
+1,shurouq,23,shurouq@gmail.com,85.6,5,[1,2]
+2,aya,23,aya@gmail.com,85.6,5,[1]
+3,noor,23,noor@gmail.com,85.6,5,[2]
+4,amal,23,amal@gmail.com,85.6,5,[1,2]

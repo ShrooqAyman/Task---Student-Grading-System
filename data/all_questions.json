@@ -1,0 +1,5 @@
+[{ "id": 1, "type": "multipleChoice", "question": "All keywords in Python are in ________", "answer": "A", "points": 1, "choices": { "A": "Capitalized", "b": "lower case", "c": "UPPER CASE", "D": "None of the mentioned" } },
+    { "id": 3, "type": "trueFalse", "question": "Python is a case sensitive language True or False?", "answer": "True", "points": 3 },
+    { "id": 4, "type": "multipleChoice", "question": "Which keyword is used for function in Python language?", "answer": "b", "points": 4, "choices": { "A": "Function", "b": "def", "c": "Fun", "D": "Define" } }
+
+]
