@@ -1,50 +1,13 @@
 from grading_system import GradingSystem
-from Grader import Grader
-from constants import ANSWERS_PATH, ALL_QUESTIONS_PATH
+
 import argparse
-
-
-def operations():
-    g = GradingSystem()
-            
-    # create courses
-    g.create_course(id=1, name='OS', instructor=1)
-    g.create_course(id=2, name='web', instructor=2)
-
-    # create students
-    g.create_student(1, 'Shurouq', 23, "shurouqewaili@gmail.com",gpa=0, level=1, enrolled_courses=[])
-
-    # create instructor
-    g.create_instructor(id=1, name="Ibrahim", age=60,email='a@gmail.com', teach_courses=[])
-    g.create_instructor(id=2, name="Hatem", age=60,email='h@gmail.com', teach_courses=[])
-   
-
-    c1 = g.search_course(1)
-    std = g.search_student(1)
-    print(std)
-    print(std.get_name())
-    # add students to course
-    c1.add_student(std)
-    #print(c1.get_name())
-
-    # add new hw
-    hw = c1.create_hw(id=1, title="hw1", due_date="20-01-2020")
-    hw.add_questions(ALL_QUESTIONS_PATH)
-    #print(c1.get_all_hw())
-
-    hw.add_submission(std=std, answers=ANSWERS_PATH)
-    #print(Grader(std=std).cal_gpa())
-
-    return g
-
 
 
 if __name__== "__main__":
     g = GradingSystem()
-
-    
     parser = argparse.ArgumentParser()
-    parser.add_argument('-id', '--id', type=int, help='id')
+    parser.add_argument('-id', '--id', type=int, help='person id')
+    parser.add_argument('-course_id', '--course_id', type=int, help='course id')
     parser.add_argument('-age', '--age', type=int, help='age')
     parser.add_argument('-name', '--name', type=str, help='name')
     parser.add_argument('-email', '--email', type=str, help='email')
@@ -58,10 +21,12 @@ if __name__== "__main__":
     parser.add_argument('--search_std', action='store_true', help='search_std')
     parser.add_argument('--show_courses', action='store_true', help='show_courses')
     parser.add_argument('--show_course', action='store_true', help='show_course')
+    parser.add_argument('--enroll_std_to_course', action='store_true', help='add student')
+    parser.add_argument('--show_students', action='store_true', help='show_students')
+    parser.add_argument('--show_instructors', action='store_true', help='show_instructors')
 
 
     args = parser.parse_args()
-    # count number of passed args 
     all_args =vars(args)
     n_args = sum([ 1 for arg in all_args.values( ) if arg])
 
@@ -71,14 +36,51 @@ if __name__== "__main__":
             parser.error('required')
         else:
             g.create_student(args.id, args.name , args.age , args.email,args.gpa ,args.level,[])
+            print('student added successfully')
+
 
     if args.add_instructor:
         if args.id is None or args.name is None or args.age is None or args.email is None:
             parser.error('required')
         else:
-            g.create_instructor(args.id, args.name , args.age , args.email)
+            g.create_instructor(args.id, args.name , args.age , args.email, teach_courses=args.teach_courses)
+            print('instructor added successfully')
+
+
     if args.search_std:
         if args.id is None:
             parser.error('required')
         else:
-            print(g.search_student(args.id))
+            if g.search_student(args.id) is not None:
+                print(g.search_student(args.id).get_std_info())
+            else:
+                print(f'not found student with ID {args.id}')
+
+    if args.show_course:
+        if args.id is None:
+            parser.error('required')
+        else:
+            if g.search_course(args.id) is not None:
+                print(g.search_course(args.id).get_course_info())
+            else:
+                print(f'not found course with ID {args.id}')
+        
+    if args.enroll_std_to_course:
+        if args.id is None or args.course_id is None:
+            parser.error('required')
+        else:
+            if g.enroll_std_in_course(std_id=args.id, course_id=args.course_id):
+                print(f'student {args.id} enrolled to course {args.course_id}')
+                print(g.search_course(args.course_id).get_course_info())
+
+            else:
+                print(f'student not enrolled to course')
+
+    if args.show_courses:
+        print(g.show_all_courses())
+
+    if args.show_students:
+        print(g.show_students())
+
+    if args.show_instructors:
+        print(g.show_instructors())

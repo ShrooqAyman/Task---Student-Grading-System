@@ -1,10 +1,9 @@
-import abc
 from Question import MultipleChoice, TrueFalse
 from submission import Submission
 from helper import read_json_file
 
 
-class Assessment(abc.ABC):
+class Assessment:
     def __init__(self, id):
         self.id = id
         self.m_lst = []
@@ -64,20 +63,23 @@ class Assessment(abc.ABC):
 
 
     def add_submission(self, std, answers):
-        sb = Submission(std=std, answers=answers)
-        sb.grade = self.cal_grade(sb)
-        self.submissions.append(sb)
+        try:
+            sb = Submission(std=std, answers=answers)
+            sb.grade = self.cal_grade(sb)
+            self.submissions.append(sb)
+        except Exception as e:
+            print(f'Error {e}')
 
 
     def cal_grade(self, sb):
-        answers = sb.get_answers()
+        std_answers = sb.get_answers()
         total_points = 0
         for result in self.answers_lst:
             qid = list(result.keys())[0]
             expected_answer = result[qid]['answers']
             expected_points = result[qid]['points']
 
-            for answer in answers:
+            for answer in std_answers:
                 if answer['id'] == qid:
                     given_answer = answer['answer']
                     if given_answer == expected_answer:

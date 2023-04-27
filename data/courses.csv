@@ -1,3 +1,21 @@
 id,name,instructor
-1 ,os,1
-2,web,1
+1,java,8
+2,os,4
+3,DC,1
+4,DC,8
+5,java,5
+6,security,4
+7,assembly,5
+8,os,9
+9,DC,9
+10,os,8
+11,logic,9
+12,security,8
+13,security,4
+14,security,3
+15,DC,6
+16,os,3
+17,java,7
+18,assembly,6
+19,java,2
+20,security,3

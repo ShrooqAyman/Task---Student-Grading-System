@@ -76,4 +76,7 @@ class Person():
 
 
     def get_info(self):
+        """
+        Return person's info.
+        """
         return f'Id: {self.id} - Name: {self.name} - Email: {self.email} - Age: {self.age}'

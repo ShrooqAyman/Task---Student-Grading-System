@@ -1,5 +1,6 @@
 import json
 import csv
+import ast
 
 
 def read_json_file(file):
@@ -41,12 +42,17 @@ def read_csv(csv_file):
             rows = list(reader)
             for row in rows:
                 for key, value in row.items():
-                    if type(value) == list:
-                        continue
-                    try:
-                        row[key] = int(value)
-                    except ValueError:
-                        pass
+                    if type(value) == str:
+                        try:
+                            row[key] =  ast.literal_eval(value)
+                        except ValueError:
+                            pass
+
+                    else:
+                        try:
+                            row[key] = int(value)
+                        except ValueError:
+                            pass
             return rows
 
     except FileNotFoundError:
